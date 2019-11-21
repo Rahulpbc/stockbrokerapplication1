@@ -1,6 +1,7 @@
 package com.example.stockbroker.dao;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 public class user {
 
@@ -8,9 +9,17 @@ public class user {
 
     private String Name;
 
+    @Indexed(unique = true)
     private String username;
 
+    @Indexed(unique = true)
     private String email;
+
+    private String password;
+
+    private String question;
+
+    private String answer;
 
     public String getId() {
         return id;
@@ -52,7 +61,23 @@ public class user {
         this.password = password;
     }
 
-    private String password;
+
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
 
 
 
