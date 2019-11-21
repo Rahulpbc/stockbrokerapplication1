@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -16,8 +17,9 @@ public class userController {
     @Autowired
     addUser newUser;
 
-    @RequestMapping(value="signUp",method = RequestMethod.POST)
-    public Boolean addUser(@RequestBody user person){
+    @RequestMapping(value="signUp",method = RequestMethod.POST,produces = {"application/json"})
+    public HashMap<String,String> addUser(@RequestBody user person){
+        HashMap<String, String> map = new HashMap<>();
        /* try
         {
             List<user> users = newUser.findUsersByUsername(person.getUsername());
@@ -30,11 +32,18 @@ public class userController {
 
        String uname=person.getUsername();
        String pass=person.getPassword();
+
         if(uname.equals("saahith")&&pass.equals("1234")) {
-            return true;
+            map.put("token",uname);
+            map.put("error","");
+
+
         }
         else {
-            return false;
+            map.put("token","");
+            map.put("error" , "error");
+
         }
+        return map;
     }
 }
