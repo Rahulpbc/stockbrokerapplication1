@@ -1,49 +1,53 @@
 package com.example.stockbroker.dao;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class user {
 
-    @Id private String id;
-
-    private String Name;
-
-    @Indexed(unique = true)
-    private String username;
-
-    @Indexed(unique = true)
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private int id;
+    private String firstname;
+    private String lastname;
     private String email;
-
     private String password;
-
     private String question;
-
     private String answer;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getName() {
-        return Name;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setName(String name) {
-        Name = name;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getUsername() {
-        return username;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
+
+
+
+
+
 
     public String getEmail() {
         return email;
@@ -61,8 +65,6 @@ public class user {
         this.password = password;
     }
 
-
-
     public String getQuestion() {
         return question;
     }
@@ -78,8 +80,5 @@ public class user {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
-
-
-
 
 }
