@@ -49,4 +49,20 @@ public class userController {
             }
        return map;
     }
+    @RequestMapping(value = "getUserProfile", method = RequestMethod.POST, produces = {"application/json"})
+    public List<user> getProfile(@RequestBody user userProfile){
+        List<user> userProf = newUser.findUsersByEmail(userProfile.getEmail());
+        return userProf;
+    }
+
+    @RequestMapping(value = "updateUserProfile", method = RequestMethod.POST, produces = {"application/json"})
+    public String updateProfile(@RequestBody user userProfile){
+        try {
+            newUser.save(userProfile);
+            return "Updated";
+        }
+        catch (Exception e) {
+            return "Update Unsucessful";
+        }
+    }
 }
