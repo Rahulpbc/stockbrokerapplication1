@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/")
 public class userController {
 
 
@@ -33,21 +33,29 @@ public class userController {
     }
     @RequestMapping(value = "login", method = RequestMethod.POST, produces = {"application/json"})
     public HashMap<String,String> getUser(@RequestBody user findUser) {
-            HashMap<String,String> map=new HashMap<String,String>();
-            String email=findUser.getEmail();
-            String password=findUser.getPassword();
-            for(user existingUsers : newUser.findUsersByEmail(findUser.getEmail())) {
-                if(email.equals(existingUsers.getEmail()) && password.equals(existingUsers.getPassword())) {
-                    map.put("TOKEN", existingUsers.getEmail());
+        HashMap<String,String> map=new HashMap<String,String>();
+        String email=findUser.getEmail();
+        String password=findUser.getPassword();
+        if(newUser.findUsersByEmail(findUser.getEmail()).size()>0) {
+            for (user existingUsers : newUser.findUsersByEmail(findUser.getEmail())) {
+                if (email.equals(existingUsers.getEmail()) && password.equals(existingUsers.getPassword())) {
+                    map.put("token", existingUsers.getEmail());
+                    map.put("fname", existingUsers.getFirstname());
                     map.put("error", "");
+                } else {
+                        map.put("fname", "");
+                        map.put("token", "");
+                        map.put("error", "Wrong Password");
                 }
-                    else
-                    {
-                        map.put("TOKEN","");
-                        map.put("error", "User Not Found/Wrong Password");
-                    }
+                }
             }
-       return map;
+            else
+            {
+                map.put("fname", "");
+                map.put("token", "");
+                map.put("error", "No User Found");
+    }
+    return map;
     }
     @RequestMapping(value = "getUserProfile", method = RequestMethod.POST, produces = {"application/json"})
     public List<user> getProfile(@RequestBody user userProfile){
