@@ -65,4 +65,33 @@ public class userController {
             return "Update Unsucessful";
         }
     }
+
+    @RequestMapping(value = "forgotPassword", method = RequestMethod.POST, produces = {"application/json"})
+    public String forgotPassword(@RequestBody user forgotPassword){
+        try {
+            String password="";
+            String qus="";
+            String ans="";
+            String usedQuestion=forgotPassword.getQuestion();
+            String usedAnswer=forgotPassword.getAnswer();
+            for(user existingUsers : newUser.findUsersByEmail(forgotPassword.getEmail()))
+            {
+                 password=existingUsers.getPassword();
+                 qus=existingUsers.getQuestion();
+                 ans=existingUsers.getAnswer();
+            }
+            if(password!=null && password.length()>0 && usedQuestion.equals(qus) && usedAnswer.equals(ans))
+            {
+                return password;
+            }
+            else
+            {
+                return "user not found/wrong answer provided";
+            }
+        }
+        catch (Exception e) {
+            return "Failed to find user";
+        }
+    }
+
 }
